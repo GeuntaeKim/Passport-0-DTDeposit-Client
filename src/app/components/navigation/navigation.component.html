@@ -1,12 +1,12 @@
 <mat-toolbar color="primary">
     <div style="width:50%;">
-    <button mat-button routerLink="/home" >Passport 0-DTD</button>   
+    <button mat-button routerLink="/home" >Passport Ø Downtime Deposit</button>   
     </div>
     <div style="text-align:right; width:50%;">
     <!--<button mat-button routerLink="/employers" >Employers</button>-->
     <!--<button *ngIf="!authService.isAuthenticated" mat-button routerLink="/" >Sign In</button>-->
-    <button *ngIf="authService.isAuthenticated" mat-button routerLink="/deposit" >Capture Deposit</button>
-    <button mat-raised-button color="primary" *ngIf="authService.isAuthenticated" routerLink="/deposits"
+    <button *ngIf="authService.isAuthenticated" mat-button routerLink="/capture" >Capture Deposit</button>
+    <button mat-raised-button color="primary" *ngIf="authService.isAuthenticated" routerLink="/push"
             matBadge="8" matBadgePosition="after" matBadgeColor="accent">
         Push Deposits
     </button>

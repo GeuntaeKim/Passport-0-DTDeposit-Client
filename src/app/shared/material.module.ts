@@ -6,7 +6,7 @@ import {
   MatListModule, MatMenuModule, MatNativeDateModule, MatProgressBarModule,
   MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule,
   MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule,
-  MatTabsModule, MatToolbarModule, MatTooltipModule, MatBadgeModule
+  MatTabsModule, MatToolbarModule, MatTooltipModule, MatBadgeModule, MatOptionModule
  } from '@angular/material';
 
 @NgModule({
@@ -18,7 +18,7 @@ import {
     MatListModule, MatMenuModule, MatNativeDateModule, MatProgressBarModule,
     MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule,
     MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule,
-    MatTabsModule, MatToolbarModule, MatTooltipModule, MatBadgeModule
+    MatTabsModule, MatToolbarModule, MatTooltipModule, MatBadgeModule, MatOptionModule
   ],
   exports: [
     MatAutocompleteModule, MatButtonModule, MatButtonToggleModule, MatCardModule,
@@ -27,7 +27,7 @@ import {
     MatListModule, MatMenuModule, MatNativeDateModule, MatProgressBarModule,
     MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule,
     MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule,
-    MatTabsModule, MatToolbarModule, MatTooltipModule, MatBadgeModule 
+    MatTabsModule, MatToolbarModule, MatTooltipModule, MatBadgeModule, MatOptionModule
     
   ],
 })

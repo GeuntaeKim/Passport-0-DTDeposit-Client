@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,13 @@ export class HomeComponent implements OnInit {
   radius: number;
   color: string;
   
-  constructor() { }
+  constructor(private router: Router, private authService: AuthService) { 
+    console.log('auth?');
+    console.log(authService.isAuthenticated);
+    if (!authService.isAuthenticated) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit() {
   }

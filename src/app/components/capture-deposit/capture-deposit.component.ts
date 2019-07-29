@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-capture-deposit',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CaptureDepositComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private authService: AuthService) { 
+    if (!authService.isAuthenticated) this.router.navigate(['/']);
+  }
 
   ngOnInit() {
+    console.log('loaded');
   }
 
 }

@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { NavigationComponent } from './components/navigation/navigation.component';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +7,5 @@ import { NavigationComponent } from './components/navigation/navigation.componen
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  title = '0 Downtime Deposit ';
-  
+  title = 'Ø Downtime Deposit ';
 }

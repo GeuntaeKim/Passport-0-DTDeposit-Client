@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { CaptureDepositComponent } from './components/capture-deposit/capture-deposit.component'
-import { PushDepositComponent } from './components/push-deposit/push-deposit.component'
 
 const appRoutes: Routes = [
   {
@@ -16,11 +14,11 @@ const appRoutes: Routes = [
   },
   {
     path: 'capture',
-    component: CaptureDepositComponent
+    loadChildren: () => import('./components/capture-deposit/capture-deposit.module').then(mod => mod.CaptureDepositModule)
   },
   {
     path: 'push',
-    component: PushDepositComponent
+    loadChildren: () => import('./components/push-deposit/push-deposit.module').then(mod => mod.PushDepositModule)
   }
 ];
 

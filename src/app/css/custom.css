@@ -60,12 +60,12 @@ p {
     background-color:#F8F8F8;
 
 }
-   .noti-box {
+.noti-box {
 min-height: 100px;
 padding: 20px;
 }
 
-    .noti-box .icon-box {
+.noti-box .icon-box {
 display: block;
 float: left;
 margin: 0 15px 10px 0;
@@ -89,7 +89,7 @@ font-size: 40px;
 border-radius: 50px;
 
 }
-    .bg-color-green {
+.bg-color-green {
 background-color: #5cb85d;
 color: #fff;
 }
@@ -110,7 +110,7 @@ background-color: #edab4e;
 color: #fff;
 }
 
- .icon-box-right {
+.icon-box-right {
 display: block;
 float: right;
 margin: 0 15px 10px 0;
@@ -122,7 +122,7 @@ text-align: center;
 font-size: 40px;
 }
 
- .main-temp-back {
+.main-temp-back {
 background: #8702A8;
 color: #FFFFFF;
 font-size: 16px;

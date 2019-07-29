@@ -1,0 +1,44 @@
+.table {
+    padding: 2%;
+}
+
+.title-area {
+    padding: 20px 0px;
+}
+
+.title-area h1 {
+    color: #204060;
+    font-family: 'Indie Flower', cursive;
+    font-weight: bolder;
+    font-size: 500%;
+    font-stretch: extra-expanded;
+    text-align: center;
+    text-shadow: 1px 1px 1px #aaa;
+}
+
+.title-area h3 {
+    color: #EFEFEF;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: lighter;
+    font-size: 220%;
+    line-height: 35px;
+    text-align: center;
+}
+
+.forgot-password-area {
+    padding-top: 20px;
+}
+
+.forgot-password-area h5 {
+    color: #666;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: lighter;
+    font-size: 100%;
+    line-height: 35px;
+    text-align: center;
+}
+
+.input-full-width {
+    width: 100%;
+}
+

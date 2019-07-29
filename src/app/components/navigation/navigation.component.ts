@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
+
 export class NavigationComponent implements OnInit {
 
   constructor(private authService: AuthService) { }

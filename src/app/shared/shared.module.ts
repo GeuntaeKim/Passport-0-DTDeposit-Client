@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  exports:      [ CommonModule, FormsModule ],
+  exports:      [ CommonModule, FormsModule, ReactiveFormsModule ],
   providers:    [ DatePipe ],
 })
 export class SharedModule { }
