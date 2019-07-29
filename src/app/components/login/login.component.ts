@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { AuthService } from '../../shared/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { GlobalVariable } from '../../shared/global';
 
 @Component({
