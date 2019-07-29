@@ -8,6 +8,6 @@ import { NavigationComponent } from './components/navigation/navigation.componen
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  title = 'Deposit Capture On-Premise';
+  title = '0 Downtime Deposit ';
   
 }
