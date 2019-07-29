@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './common/login/login.component';
-import { HomeComponent } from './common/home/home.component';
-import { DepositComponent } from './component/deposit/deposit.component'
-import { DepositListComponent } from './component/deposit/deposit-list.component'
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { CaptureDepositComponent } from './components/capture-deposit/capture-deposit.component'
+import { PushDepositComponent } from './components/push-deposit/push-deposit.component'
 
 const appRoutes: Routes = [
   {
@@ -15,12 +15,12 @@ const appRoutes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'deposit',
-    component: DepositComponent
+    path: 'capture',
+    component: CaptureDepositComponent
   },
   {
-    path: 'deposit/list',
-    component: DepositListComponent
+    path: 'push',
+    component: PushDepositComponent
   }
 ];
 

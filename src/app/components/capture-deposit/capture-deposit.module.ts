@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { CaptureDepositRoutingModule } from './capture-deposit-routing.module';
 
-
 @NgModule({
-  declarations: [],
+  declarations: [ShowDepositComponent],
   imports: [
     CommonModule,
     CaptureDepositRoutingModule
