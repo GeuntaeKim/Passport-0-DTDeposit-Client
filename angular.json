@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -84,6 +85,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -115,6 +117,120 @@
           }
         }
       }
-    }},
+    },
+    "sv": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/sv",
+      "sourceRoot": "projects/sv/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/sv",
+            "index": "projects/sv/src/index.html",
+            "main": "projects/sv/src/main.ts",
+            "polyfills": "projects/sv/src/polyfills.ts",
+            "tsConfig": "projects/sv/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/sv/src/favicon.ico",
+              "projects/sv/src/assets"
+            ],
+            "styles": [
+              "projects/sv/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/sv/src/environments/environment.ts",
+                  "with": "projects/sv/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "sv:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sv:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "sv:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/sv/src/test.ts",
+            "polyfills": "projects/sv/src/polyfills.ts",
+            "tsConfig": "projects/sv/tsconfig.spec.json",
+            "karmaConfig": "projects/sv/karma.conf.js",
+            "assets": [
+              "projects/sv/src/favicon.ico",
+              "projects/sv/src/assets"
+            ],
+            "styles": [
+              "projects/sv/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/sv/tsconfig.app.json",
+              "projects/sv/tsconfig.spec.json",
+              "projects/sv/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/sv/e2e/protractor.conf.js",
+            "devServerTarget": "sv:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "sv:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
   "defaultProject": "DepositCaptureOnPremise"
 }

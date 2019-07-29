@@ -1,0 +1,26 @@
+<div class="main-background">
+    <div class="row">
+        <mat-card>
+            <mat-form-field class="input-full-width line-spacing-10">
+                <input matInput  [formControl]="id" placeholder="User ID" required maxlength=200>
+                <mat-error *ngIf="id.hasError('required')">
+                    User ID is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="input-full-width line-spacing-10">
+                <input matInput  [formControl]="password" placeholder="Password" type="password" required maxlength=200>
+                <mat-error *ngIf="password.hasError('required')">
+                    Password is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" class="input-full-width line-spacing-10" (click)="login()">Login</button>
+        </mat-card>
+    </div>
+    <div class="row">
+        <div class="col-mat-12 forgot-password-area">
+            <h5>
+                <button mat-button>FORGOT PASSWORD?</button>
+            </h5>   
+        </div>
+    </div>
+</div>
