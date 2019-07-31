@@ -1,3 +1,11 @@
+<!-- This can be used in each components -->
+<div class="loading-screen-wrapper" *ngIf="loading">
+    <div class="loading-screen-icon">
+        <div class="loader">
+            <div class="bar1"></div><div class="bar2"></div><div class="bar3"></div><div class="bar4"></div><div class="bar5"></div><div class="bar6"></div>
+        </div>
+    </div>
+</div>
 <div id="container">
   <app-navigation id="header" class="shadow-3dp"></app-navigation>
   <div id="content">
@@ -8,6 +16,6 @@
   <div id="footer">
       <img src="assets/ncr.jpg" width="65px" />&nbsp;
       <img src="assets/hack_logo.png" width="65px" />
-      <div>Powered by Team Plan B from Waterloo</div>
+      <div>Powered by Team Plan B at Waterloo</div>
   </div>
 </div>

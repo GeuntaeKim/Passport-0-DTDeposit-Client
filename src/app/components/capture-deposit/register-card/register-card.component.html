@@ -16,18 +16,18 @@
                     <mat-form-field class="input-70-width">
                         <input matInput placeholder="Type Passport Location ID" formControlName="locationId" maxlength="13">
                     </mat-form-field>
-                    <button mat-button >Fetch Location ID <mat-icon>add_circle</mat-icon></button>
+                    <button mat-button (click)="onFetchLocationClick()">Fetch matching Location ID <mat-icon>add_circle</mat-icon></button>
                     <mat-form-field class="input-70-width">
                         <input matInput placeholder="Type Passport Account ID" formControlName="accountId" maxlength="12">
                     </mat-form-field>
-                    <button mat-button >Fetch Account ID <mat-icon>add_circle</mat-icon></button>
+                    <button mat-button (click)="onFetchAccountClick()">Fetch matching Account ID <mat-icon>add_circle</mat-icon></button>
                 </form>
             </div>
         </div>
     </mat-card>
     <div class="buttons">
-        <button mat-button routerLink="../../">Back</button>
-        <button mat-button [routerLink]="['list']">List</button>
-        <button mat-button color="primary" (click)="onSaveClick()">Save Card</button>
+        <button mat-stroked-button routerLink="/">Back</button>
+        <button mat-stroked-button [routerLink]="['list']">List</button>
+        <button mat-stroked-button color="primary" (click)="onSaveClick()">Save Card</button>
     </div>
 </div>

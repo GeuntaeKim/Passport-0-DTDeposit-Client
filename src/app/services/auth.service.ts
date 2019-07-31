@@ -53,7 +53,7 @@ export class AuthService {
 
       localStorage.setItem(this.TOKEN_KEY, authResponse.token)
       localStorage.setItem(this.NAME_KEY, authResponse.name)
-      this.router.navigate(['/home']);
+      this.router.navigate(['/capture']);
 
       return true;
   }

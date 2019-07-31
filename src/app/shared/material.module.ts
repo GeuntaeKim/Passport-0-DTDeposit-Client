@@ -7,7 +7,7 @@ import {
   MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule,
   MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule,
   MatTabsModule, MatToolbarModule, MatTooltipModule, MatBadgeModule, MatOptionModule, 
-  MatStepperModule
+  MatStepperModule, MatTableModule, MatPaginatorModule
  } from '@angular/material';
 
 @NgModule({
@@ -20,7 +20,7 @@ import {
     MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule,
     MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule,
     MatTabsModule, MatToolbarModule, MatTooltipModule, MatBadgeModule, MatOptionModule,
-    MatStepperModule
+    MatStepperModule, MatTableModule, MatPaginatorModule
   ],
   exports: [
     MatAutocompleteModule, MatButtonModule, MatButtonToggleModule, MatCardModule,
@@ -30,7 +30,7 @@ import {
     MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule,
     MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule,
     MatTabsModule, MatToolbarModule, MatTooltipModule, MatBadgeModule, MatOptionModule,
-    MatStepperModule
+    MatStepperModule, MatTableModule, MatPaginatorModule
   ],
 })
 export class MaterialModule { }

@@ -11,7 +11,7 @@
                 <ng-template matStepLabel>Fill the Card information</ng-template>
                 <div class="row">
                     <mat-form-field class="input-70-width">
-                        <input type="text" placeholder="Type or choose the Card" matInput formControlName="cardNumber" (change)="onCardNumberChange()" [matAutocomplete]="auto" maxlength="19">
+                        <input type="text" placeholder="Type a new ATM Card or choose a registered ATM Card" matInput formControlName="cardNumber" (change)="onCardNumberChange()" [matAutocomplete]="auto" maxlength="19">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let cardOption of cardFilteredOptions | async" [value]="cardOption" (click)="onCardSelect()">
                                 {{cardOption}}
@@ -23,7 +23,7 @@
                     </mat-form-field>
                     <button mat-button [(disabled)]="isRegistered" (click)="onRegisterClick()">Register this Card <mat-icon>add_circle</mat-icon></button>
                 </div>
-                <div>
+                <div class="line-10">
                     <button mat-button matStepperNext>Next</button>
                 </div>
                 </form>
@@ -33,45 +33,58 @@
                 <ng-template matStepLabel>Scan Items</ng-template>
                 <mat-tab-group class="input-full-width">
                     <mat-tab label="Front" class="input-50-width">
-                        <img [src]="frontImage" *ngIf="!isFrontImageLoading; else noFrontImageFound">
-                        <ng-template #noFrontImageFound>
-                            <div>
-                                <img src="assets/cheque1.jpg" alt="Fallbackimage" width="400px">
-                            </div>
-                        </ng-template>
+                        <div class="table1">
+                            <!--<img [src]="frontImage" *ngIf="!isFrontImageLoading; else noFrontImageFound">-->
+                            <img src="assets/imggreyf1.png" *ngIf="!isFrontImageLoading; else noFrontImageFound" width="500px">
+                            <ng-template #noFrontImageFound>
+                                <div>
+                                    <img src="assets/cheque1.jpg" alt="Fallbackimage" width="400px">
+                                </div>
+                            </ng-template>
+                        </div>
                     </mat-tab>
                     <mat-tab label="Rear">
+                        <div class="table1">
+                            <!--<img [src]="rearImage" *ngIf="!isRearImageLoading; else noRearImageFound">-->
+                            <img src="assets/imggreyr1.png" *ngIf="!isRearImageLoading; else noRearImageFound" width="500px">
+                            <ng-template #noRearImageFound>
+                                <div>
+                                    <img src="assets/cheque2.jpg" alt="Fallbackimage" width="400px">
+                                </div>
+                            </ng-template>
+                        </div>
                     </mat-tab>
                   </mat-tab-group>
+                  <mat-progress-bar *ngIf="showProgressLoading" mode="indeterminate"></mat-progress-bar>
                   <button mat-raised-button color="primary" class="input-full-width line-spacing-10" (click)="onCaptureClick()">Start Capture</button>
-                <div>
+                <div class="line-10">
                     <button mat-button matStepperPrevious>Back</button>
                     <button mat-button matStepperNext>Next</button>
                 </div>
                 </form>
             </mat-step>
-            <mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
+                <form [formGroup]="thirdFormGroup">
                 <ng-template matStepLabel>Save Deposit</ng-template>
-                You are now done.
-                <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
+                <mat-form-field class="input-full-width">
+                    <span matPrefix>$&nbsp;</span>
+                    <input matInput placeholder="Input deposit amount" formControlName="amount">
+                </mat-form-field>
+                <div class="congrat">
+                    You've provided all necessary information! 
                 </div>
-            </mat-step>
-            <mat-step>
-                <ng-template matStepLabel>Print Receipt</ng-template>
-                You are now done.
-                <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
+                <button mat-raised-button color="primary" class="input-full-width line-spacing-10" (click)="onSaveClick()">Save Deposit</button>
+                <div class="line-10">
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
                 </div>
+                </form>
             </mat-step>
             </mat-horizontal-stepper>
-
-
         </div>
     </mat-card>
     <div class="buttons">
-        <button mat-button [routerLink]="['new']" color="primary" (click)="onSaveClick()">Save Deposit</button>
+        <button mat-stroked-button [routerLink]="['list']">List</button>
+        
     </div>
 </div>

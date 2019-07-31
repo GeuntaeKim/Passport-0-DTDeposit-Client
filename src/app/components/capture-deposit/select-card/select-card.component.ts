@@ -14,22 +14,42 @@ import { DepositService, Card, Deposit, Item } from '../../../services/deposit.s
   styleUrls: ['./select-card.component.css']
 })
 export class SelectCardComponent implements OnInit {
-  
+  loading = false;
   /* Material Components */
-  isLinear = false;
+  isLinear = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
 
   /* UI Components */
   frontImage: any;
   rearImage: any;
 
   /* Data Objects */
+  deposit: Deposit = {
+    id: null,
+    locationId: '',
+    accountId: '',
+    amount: '',
+    status: 0,
+    cardId: 0
+  };
+  item: Item = {
+    id: null,
+    amount: '',
+    micr: '',
+    frontImage: '',
+    rearImage: '',
+    depositId: null
+  }
+  card: Card;
+  registeredCard: Card;
   isRegistered: boolean = false;
   cardOptions: string[];
   cardFilteredOptions: Observable<string[]>;
   isFrontImageLoading: boolean = true;
   isRearImageLoading: boolean = true;
+  showProgressLoading: boolean = false;
   base64data;
 
   constructor(
@@ -42,17 +62,20 @@ export class SelectCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loading=true;
     this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required],
       cardNumber: ['', [
         Validators.required,
         Validators.pattern(GlobalVariable.CARD_REGEX)
       ]]
     });
     this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
     });
-
+    this.thirdFormGroup = this.formBuilder.group({
+      amount: ['', [
+        Validators.required
+      ]]
+    });
     this.loadCardList();
   }
 
@@ -77,6 +100,44 @@ export class SelectCardComponent implements OnInit {
         map(value => this._filter(value))
       );
     });
+  }
+
+  async getCard(id: string){
+    await this.depositService.getCard(id)
+    .then(results => {
+      this.card = <Card> results[0];
+    }), error => {
+      console.log(error);
+    };
+  }
+
+  async getCardByNumber(cardNumber: string){
+    await this.depositService.getCardByNumber(cardNumber)
+    .then(results => {
+      this.registeredCard = <Card> results;
+    }), error => {
+      console.log(error);
+    };
+  }
+
+  async getImage() {
+    this.isFrontImageLoading = true;
+    this.isRearImageLoading = true;
+    await this.depositService.getImage(4)
+    .then(results => {
+      console.log('from service');
+      console.log(results);
+      this.createImageFromBlob(results);
+      //this.createImageFromBlob(results);
+      this.isFrontImageLoading = false;
+      this.isRearImageLoading = false;
+    }), error => {
+      this.isFrontImageLoading = false;
+      this.isRearImageLoading = false;
+      console.log(error);
+    };
+
+    this.showProgressLoading = false;
   }
 
   getCardNumber(): string {
@@ -130,34 +191,21 @@ export class SelectCardComponent implements OnInit {
     }
   }
 
-  async getFrontImage() {
-    this.isFrontImageLoading = true;
-    console.log('test');
-    await this.depositService.getItem(4)
-    .then(results => {
-      console.log('from service');
-      console.log(results);
-      this.createImageFromBlob(results);
-      //this.createImageFromBlob(results);
-      this.isFrontImageLoading = false;
-    }), error => {
-      this.isFrontImageLoading = false;
-      console.log(error);
-    };
-
-  }
-
   onClearClick(): void {
     this.firstFormGroup.get('cardNumber').setValue('');
     this.isRegistered = false;
+    this.registeredCard = undefined;
   }
 
   onCardNumberChange(): void {
     this.isRegistered = false;
+    this.registeredCard = undefined;
   }
 
   onCardSelect(): void {
     this.isRegistered = true;
+    var registeredCardNumber = this.firstFormGroup.get('cardNumber').value.replace(/-/g, '');
+    this.getCardByNumber(registeredCardNumber);
   }
 
   onRegisterClick(): void {
@@ -175,11 +223,98 @@ export class SelectCardComponent implements OnInit {
   }
 
   onCaptureClick(): void {
-    this.getFrontImage();
+    this.showProgressLoading = true;
+    this.getImage();
   }
 
   onSaveClick(): void {
+    if(!this.firstFormGroup.valid || !this.secondFormGroup.valid || !this.thirdFormGroup.valid) {
+      this.snackBar.open('Please make sure all neccessary information is provided!', 'ERROR', {
+          duration: 1000,
+      });
+      return;
+    }
 
+    // deposit info
+    this.deposit.locationId = '';
+    this.deposit.accountId = '';
+    if (this.isRegistered) {
+      console.log(this.registeredCard)
+      this.deposit.locationId = this.registeredCard.locationId;
+      this.deposit.accountId = this.registeredCard.accountId;
+      this.deposit.status = 1;
+    }
+    this.deposit.amount = this.thirdFormGroup.get('amount').value;
+
+    // item info (temp)
+    this.item.amount = this.deposit.amount;
+    this.item.micr = 'd141000011d0701140c 5716';
+    this.item.frontImage = this.frontImage;
+    this.item.rearImage = this.rearImage;
+    this.item.depositId = this.deposit.id;
+
+
+
+    var return_value = false; 
+    this.depositService.saveDeposit(this.deposit)
+    .then(results => {
+      console.log('get result from save deposit');
+      console.log(results);
+      if (results != null && results.status == 1) {
+        this.deposit.id = results.id;
+        return_value = true;
+      }
+    })
+    .then(async() => {
+      await this.depositService.saveItem(this.item)
+      .then(results => {
+        if (results != null && results.status == 1) {
+          this.item.id = results.id;
+          return_value = true;
+        }
+      })
+    })
+    .then(() => {
+      if(!return_value) {
+        this.snackBar.open('Unexpected error occurred!', 'ERROR', {
+            duration: 1000,
+        });
+        return;
+      } else {
+        this.router.navigate(['receipt'], {
+          queryParams: { 
+            depositId: this.deposit.id,
+            //itemId: this.item.id,
+            //cardId: this.card.id 
+          }, 
+          relativeTo: this.route} 
+        );
+      }
+    });
+  }
+
+  async saveDepositAndItem() {
+    var return_value = false; 
+    await this.depositService.saveDeposit(this.deposit)
+    .then(results => {
+      console.log('get result from save deposit');
+      console.log(results);
+      if (results != null && results.status == 1) {
+        this.deposit.id = results.id;
+        return_value = true;
+      }
+    })
+    .then(async() => {
+      console.log('going somewhere')
+      await this.depositService.saveItem(this.item)
+      .then(results => {
+        if (results != null && results.status == 1) {
+          this.item.id = results.id;
+          return_value = true;
+        }
+      })
+    });
+    return return_value;
   }
 
   private _filter(value: string): string[] {

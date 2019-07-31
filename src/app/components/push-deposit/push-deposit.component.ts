@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { DepositService } from 'src/app/services/deposit.service';
 
 @Component({
   selector: 'app-push-deposit',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PushDepositComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private authService: AuthService) { 
+    if (!authService.isAuthenticated) this.router.navigate(['/']);
+  }
 
   ngOnInit() {
+    
   }
 
 }

@@ -4,6 +4,7 @@ import { CaptureDepositComponent } from './capture-deposit.component';
 import { SelectCardComponent } from './select-card/select-card.component';
 import { ListCardsComponent } from './list-cards/list-cards.component';
 import { RegisterCardComponent } from './register-card/register-card.component';
+import { ViewReceiptComponent } from './view-receipt/view-receipt.component';
 
 const routes: Routes = [{
   path: '',
@@ -20,6 +21,10 @@ const routes: Routes = [{
       {
           path: 'register',
           component: RegisterCardComponent
+      },
+      {
+          path: 'receipt',
+          component: ViewReceiptComponent
       }
   ]
 }];

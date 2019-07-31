@@ -2,6 +2,10 @@
     padding: 2%;
 }
 
+.table1 {
+    padding: 4%;
+}
+
 .title-area {
     padding: 20px 0px;
 }
@@ -16,4 +20,13 @@
 
 .input-70-width {
     width: 70%;
+}
+
+.congrat {
+    padding: 2% 10%;
+    text-align: center;
+}
+
+.line-10 {
+    padding-top: 10px;
 }

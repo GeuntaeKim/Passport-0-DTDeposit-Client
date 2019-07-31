@@ -49,6 +49,14 @@ export class RegisterCardComponent implements OnInit {
       });
   }
 
+  onFetchLocationClick(): void {
+    this.formGroup.get('locationId').setValue('2700000000001');
+  }
+
+  onFetchAccountClick(): void {
+    this.formGroup.get('accountId').setValue('200000000001');
+  }
+
   onSaveClick(): void{
     if(!this.formGroup.valid) {
       this.snackBar.open('Please enter all information! You can still create the deposit without card registration!', 'ERROR', {
@@ -62,7 +70,7 @@ export class RegisterCardComponent implements OnInit {
     this.card.locationId = this.formGroup.get('locationId').value;
     this.card.accountId = this.formGroup.get('accountId').value;
     this.depositService.saveCard(this.card);
-    this.router.navigate(['../../'], {relativeTo: this.route});
+    this.router.navigate(['/capture'], {relativeTo: this.route});
   }
 
 }

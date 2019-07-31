@@ -1,0 +1,37 @@
+<div class="table">
+    <mat-card>
+        <div class="row">
+            <h3 highlight>Deposit Receipt</h3>
+            <mat-divider></mat-divider>
+        </div>
+        <div class="row">
+            <div class="table">
+                <mat-card id="printableArea" class="input-card">
+                    <mat-card-header>
+                        <div mat-card-avatar class="example-header-image"></div>
+                        <mat-card-title>David Account</mat-card-title>
+                        <mat-card-subtitle>1125-5679-4578-5554</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="assets/imggreyf1.png" alt="Front Binary Image">
+                    <img mat-card-image src="assets/imggreyr1.png" alt="Rear Binary Image">
+                    <mat-card-content>
+                        <p>
+                            Deposit Amount : 825.34<br>
+                            Deposit Data : 2019-07-31<br>
+                            Deposit Status : Open
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary">
+                            Print this page
+                            <mat-icon>print</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </mat-card>
+    <div class="buttons">
+        <button mat-stroked-button routerLink="/">Back</button>
+    </div>
+</div>

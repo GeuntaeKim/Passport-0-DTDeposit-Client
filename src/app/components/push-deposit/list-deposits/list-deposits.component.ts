@@ -4,31 +4,28 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 
 export interface PeriodicElement {
-  name: string;
   position: number;
-  weight: number;
-  symbol: string;
+  name: string;
+  amount: string;
+  date: string;
+  status: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+  {position: 1, name: 'David Account', amount: '20.00', date: '2019-07-31',status: 'Open'},
+  {position: 2, name: 'Plan B', amount: '156.00', date: '2019-07-31',status: 'Completed'},
+  {position: 3, name: 'Plan B', amount: '14.00', date: '2019-07-31',status: 'Completed'},
+  {position: 4, name: 'Temp Account', amount: '720.00', date: '2019-07-30',status: 'Completed'},
+  {position: 5, name: 'Branch', amount: '50.00', date: '2019-06-28',status: 'Open'},
+  {position: 6, name: 'Teller', amount: '50.00', date: '2019-06-28',status: 'Pushed'},
 ];
 
 @Component({
-  selector: 'app-list-cards',
-  templateUrl: './list-cards.component.html',
-  styleUrls: ['./list-cards.component.css']
+  selector: 'app-list-deposits',
+  templateUrl: './list-deposits.component.html',
+  styleUrls: ['./list-deposits.component.css']
 })
-export class ListCardsComponent implements OnInit {
+export class ListDepositsComponent implements OnInit {
 
   /* Paginator */
   // MatPaginator Inputs
@@ -44,7 +41,7 @@ export class ListCardsComponent implements OnInit {
   }
 
   /* Table */
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['select', 'position', 'name', 'amount', 'date', 'status'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
 
