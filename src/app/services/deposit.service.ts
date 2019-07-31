@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Http, Headers, ResponseType, ResponseContentType } from '@angular/http';
+import { Http, Headers, RequestOptions, ResponseType, ResponseContentType } from '@angular/http';
 import { Subject, Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { GlobalVariable } from '../shared/global';
@@ -13,8 +13,10 @@ import { GlobalVariable } from '../shared/global';
 export class Card {
   constructor(
       public id:number,
-      public cardNumber:number,
-      public name:string
+      public cardNumber:string,
+      public name:string,
+      public locationId:string,
+      public accountId:string
       ) {
   }
 }
@@ -22,11 +24,11 @@ export class Card {
 export class Deposit {
   constructor(
       public id:number,
-      public localtionid:string,
-      public accountid:string,
+      public locationId:string,
+      public accountId:string,
       public amount:string,
       public status:number,
-      public cardid:number
+      public cardId:number
       ) {
   }
 }
@@ -57,6 +59,11 @@ export class DepositService {
   item: Item;
 
   frontImage: Blob;
+
+  json_headers = new Headers({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
 
   constructor(private http:Http, private sb: MatSnackBar) { 
     this.card.subscribe();
@@ -100,15 +107,28 @@ export class DepositService {
     });
   }
 
+  async saveCard(card: Card) {
+      var response; 
+      try {
+          let body = JSON.stringify(card);
+          let headers = new Headers({ 'Content-Type': 'application/json' });
+          let options = new RequestOptions({ headers: this.json_headers });
+
+          response = await this.http.post(this.BASE_URL + '/cards/add', body, options).toPromise();
+      } catch (error) {
+          console.log(error)
+          this.handleError("Unable to save the card");
+      }
+      return response;
+  }
+
   getItem(id: number | string) {
     return new Promise<Blob>(resolve =>{
       setTimeout(() => { 
-          const headers = new Headers({
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          });
-          this.http.get(this.BASE_URL + '/items/4', {headers: headers, responseType: ResponseContentType.Blob}).subscribe(response => {
-              this.frontImage = <Blob> response.json();
+          console.log('start')
+          this.http.get(this.BASE_URL + '/items/4', {headers: this.json_headers, responseType: ResponseContentType.Blob}).subscribe(response => {
+            console.log(response);  
+            this.frontImage = <Blob> response.json();
               console.log('frontImage');
               console.log(this.frontImage);
               resolve(this.frontImage); 

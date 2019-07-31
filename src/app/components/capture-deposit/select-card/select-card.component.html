@@ -11,7 +11,7 @@
                 <ng-template matStepLabel>Fill the Card information</ng-template>
                 <div class="row">
                     <mat-form-field class="input-70-width">
-                        <input type="text" placeholder="Type or choose the Card" matInput formControlName="cardNumber" (change)="onCardNumberChange()" [matAutocomplete]="auto">
+                        <input type="text" placeholder="Type or choose the Card" matInput formControlName="cardNumber" (change)="onCardNumberChange()" [matAutocomplete]="auto" maxlength="19">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let cardOption of cardFilteredOptions | async" [value]="cardOption" (click)="onCardSelect()">
                                 {{cardOption}}
@@ -31,16 +31,19 @@
             <mat-step [stepControl]="secondFormGroup">
                 <form [formGroup]="secondFormGroup">
                 <ng-template matStepLabel>Scan Items</ng-template>
-                <mat-tab-group>
-                    <mat-tab label="Front">test1
-                        <img [src]="frontImage" *ngIf="!isImageLoading; else noFrontImageFound">
-                        <ng-template #noImageFound>test2
-                            <img src="fallbackImage.png" alt="Fallbackimage">
+                <mat-tab-group class="input-full-width">
+                    <mat-tab label="Front" class="input-50-width">
+                        <img [src]="frontImage" *ngIf="!isFrontImageLoading; else noFrontImageFound">
+                        <ng-template #noFrontImageFound>
+                            <div>
+                                <img src="assets/cheque1.jpg" alt="Fallbackimage" width="400px">
+                            </div>
                         </ng-template>
                     </mat-tab>
                     <mat-tab label="Rear">
                     </mat-tab>
                   </mat-tab-group>
+                  <button mat-raised-button color="primary" class="input-full-width line-spacing-10" (click)="onCaptureClick()">Start Capture</button>
                 <div>
                     <button mat-button matStepperPrevious>Back</button>
                     <button mat-button matStepperNext>Next</button>
@@ -66,25 +69,6 @@
             </mat-horizontal-stepper>
 
 
-        </div>
-
-        <div class="row">
-            <div class="table">
-                <div class="row">
-
-                </div>
-                <div class="row">
-                </div>
-                <div class="row">
-                    <div id="detail">
-                        <!--<view-scanned-images [inputCard]="option"></view-scanned-images>-->
-                        
-                    </div>  
-                </div>
-                <div class="row ">
-                    
-                </div>
-            </div>
         </div>
     </mat-card>
     <div class="buttons">

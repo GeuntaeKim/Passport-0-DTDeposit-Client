@@ -1,16 +1,33 @@
 <div class="table">
     <mat-card>
         <div class="row">
-            <h3 highlight>Capture Deposit</h3>
+            <h3 highlight>Register Card</h3>
             <mat-divider></mat-divider>
         </div>
         <div class="row">
-            <input type="text" placeholder="Type the Card information" matInput (formControl)="cardNumber">
+            <div class="table">
+                <form [formGroup]="formGroup">
+                    <mat-form-field class="input-full-width">
+                        <input matInput placeholder="Type the Card information" formControlName="cardNumber" maxlength="19">
+                    </mat-form-field>
+                    <mat-form-field class="input-full-width">
+                        <input matInput placeholder="Make a comment for the Card" formControlName="cardName">
+                    </mat-form-field>
+                    <mat-form-field class="input-70-width">
+                        <input matInput placeholder="Type Passport Location ID" formControlName="locationId" maxlength="13">
+                    </mat-form-field>
+                    <button mat-button >Fetch Location ID <mat-icon>add_circle</mat-icon></button>
+                    <mat-form-field class="input-70-width">
+                        <input matInput placeholder="Type Passport Account ID" formControlName="accountId" maxlength="12">
+                    </mat-form-field>
+                    <button mat-button >Fetch Account ID <mat-icon>add_circle</mat-icon></button>
+                </form>
+            </div>
         </div>
     </mat-card>
     <div class="buttons">
-        <button mat-button routerLink="../">Back</button>
+        <button mat-button routerLink="../../">Back</button>
         <button mat-button [routerLink]="['list']">List</button>
-        <button mat-button color="primary" (click)="onSaveClick">Save Deposit</button>
+        <button mat-button color="primary" (click)="onSaveClick()">Save Card</button>
     </div>
 </div>

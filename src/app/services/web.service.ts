@@ -12,8 +12,4 @@ export class WebServices {
   getMessages() {
       return this.http.get('http://localhost:1234/messages').toPromise();
   }
-
-  getEmployers() {
-      return this.http.get('http://localhost:5000/employers').toPromise();
-  }
 }

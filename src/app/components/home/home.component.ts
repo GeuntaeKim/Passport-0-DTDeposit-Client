@@ -17,8 +17,6 @@ export class HomeComponent implements OnInit {
   color: string;
   
   constructor(private router: Router, private authService: AuthService) { 
-    console.log('auth?');
-    console.log(authService.isAuthenticated);
     if (!authService.isAuthenticated) {
       this.router.navigate(['/']);
     }

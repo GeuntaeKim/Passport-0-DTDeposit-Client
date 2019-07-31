@@ -57,7 +57,6 @@ export class UserService {
             name: response[0].userid
         };
     }
-    console.log(authInfo);
     return authInfo;
   }
 

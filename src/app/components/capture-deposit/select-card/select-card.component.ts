@@ -28,8 +28,8 @@ export class SelectCardComponent implements OnInit {
   isRegistered: boolean = false;
   cardOptions: string[];
   cardFilteredOptions: Observable<string[]>;
-  isFrontImageLoading: boolean = false;
-  isRearImageLoading: boolean = false;
+  isFrontImageLoading: boolean = true;
+  isRearImageLoading: boolean = true;
   base64data;
 
   constructor(
@@ -54,7 +54,6 @@ export class SelectCardComponent implements OnInit {
     });
 
     this.loadCardList();
-    this.getFrontImage();
   }
 
   async loadCardList() {
@@ -81,8 +80,6 @@ export class SelectCardComponent implements OnInit {
   }
 
   getCardNumber(): string {
-    //console.log(this.firstFormGroup);
-    //console.log(this.firstFormGroup.get('cardNumber').value)
     return this.firstFormGroup.get('cardNumber').value;
   }
   
@@ -90,11 +87,38 @@ export class SelectCardComponent implements OnInit {
     let reader = new FileReader();
     reader.addEventListener("load", () => {
       console.log(reader.result);
-      this.frontImage = reader.result;
+      var base64result = reader.result.toString().split(',')[1];
+      console.log(base64result);
+      this.frontImage = base64result;
     }, false);
 
     if (image) {
-      reader.readAsArrayBuffer(image);
+      //reader.readAsArrayBuffer(image);
+      reader.readAsDataURL(image);
+    }
+    /* onload and onloadend does give same info 
+    reader.onload = function(e) {
+      console.log('onload')
+      console.log(reader.result);
+    }
+    reader.onloadend = function() {
+      console.log('onloadend')
+      console.log(reader.result);
+    }
+    */
+  }
+
+  createImageFromURL(image: string) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      console.log(reader.result);
+      var base64result = reader.result.toString().split(',')[1];
+      console.log(base64result);
+      this.frontImage = base64result;
+    }, false);
+
+    if (image) {
+      //reader.readAsDataURL(image);
     }
     reader.onload = function(e) {
       console.log('onload')
@@ -108,10 +132,12 @@ export class SelectCardComponent implements OnInit {
 
   async getFrontImage() {
     this.isFrontImageLoading = true;
-    await this.depositService.getItem(1)
+    console.log('test');
+    await this.depositService.getItem(4)
     .then(results => {
       console.log('from service');
       console.log(results);
+      this.createImageFromBlob(results);
       //this.createImageFromBlob(results);
       this.isFrontImageLoading = false;
     }), error => {
@@ -135,7 +161,21 @@ export class SelectCardComponent implements OnInit {
   }
 
   onRegisterClick(): void {
-    this.router.navigate(['list', this.firstFormGroup.get('cardNumber').value], {relativeTo: this.route} );
+    if (this.firstFormGroup.get('cardNumber').value == ''){
+      this.snackBar.open('Please enter Card information!', 'ERROR', {
+          duration: 1000,
+      });
+      return;
+    }
+
+    this.router.navigate(['register'], {
+      queryParams: { cardNumber: this.firstFormGroup.get('cardNumber').value }, 
+      relativeTo: this.route} 
+    );
+  }
+
+  onCaptureClick(): void {
+    this.getFrontImage();
   }
 
   onSaveClick(): void {

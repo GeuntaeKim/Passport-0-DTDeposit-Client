@@ -18,7 +18,7 @@ const routes: Routes = [{
           component: ListCardsComponent
       },
       {
-          path: 'new',
+          path: 'register',
           component: RegisterCardComponent
       }
   ]

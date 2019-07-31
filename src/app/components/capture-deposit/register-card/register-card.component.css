@@ -1,0 +1,21 @@
+.table {
+    padding: 2%;
+}
+
+.title-area {
+    padding: 20px 0px;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.input-70-width {
+    width: 70%;
+}
+
+.input-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
