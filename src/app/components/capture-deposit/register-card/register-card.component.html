@@ -1,0 +1,16 @@
+<div class="table">
+    <mat-card>
+        <div class="row">
+            <h3 highlight>Capture Deposit</h3>
+            <mat-divider></mat-divider>
+        </div>
+        <div class="row">
+            <input type="text" placeholder="Type the Card information" matInput (formControl)="cardNumber">
+        </div>
+    </mat-card>
+    <div class="buttons">
+        <button mat-button routerLink="../">Back</button>
+        <button mat-button [routerLink]="['list']">List</button>
+        <button mat-button color="primary" (click)="onSaveClick">Save Deposit</button>
+    </div>
+</div>

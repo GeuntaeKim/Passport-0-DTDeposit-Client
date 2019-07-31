@@ -31,8 +31,11 @@ export class AuthService {
       return new RequestOptions({ headers: header});
   }
 
-  login(id, password) {
-      return this.authenticate(this.userService.login(id, password));
+  async login(id, password) {
+    var authInfo;
+    authInfo = await this.userService.login(id, password);
+
+    return this.authenticate(authInfo);
   }
 
   logout() {
@@ -43,11 +46,10 @@ export class AuthService {
 
   authenticate(res) {
       var authResponse = res;
-      if (!authResponse.token)
+      if (authResponse == undefined || !authResponse.token){
         return false;
+      }
 
-      if (authResponse.name !== 'wm_op1')
-        return false;
 
       localStorage.setItem(this.TOKEN_KEY, authResponse.token)
       localStorage.setItem(this.NAME_KEY, authResponse.name)

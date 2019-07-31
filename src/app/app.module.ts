@@ -18,6 +18,7 @@ import { MaterialModule } from './shared/material.module';
 /* Services */
 import { AuthService } from './services/auth.service';
 import { WebServices } from './services/web.service';
+import { LoadingService } from './services/loading.service';
 import { UserService } from './services/user.service';
 import { DepositService } from './services/deposit.service';
 
@@ -40,6 +41,7 @@ import { DepositService } from './services/deposit.service';
   providers: [
     AuthService,
     WebServices, 
+    LoadingService,
     UserService,
     DepositService
   ],

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CaptureDepositComponent } from './capture-deposit.component';
 import { SelectCardComponent } from './select-card/select-card.component';
 import { ListCardsComponent } from './list-cards/list-cards.component';
-import { AddCardComponent } from './add-card/add-card.component';
+import { RegisterCardComponent } from './register-card/register-card.component';
 
 const routes: Routes = [{
   path: '',
@@ -19,7 +19,7 @@ const routes: Routes = [{
       },
       {
           path: 'new',
-          component: AddCardComponent
+          component: RegisterCardComponent
       }
   ]
 }];

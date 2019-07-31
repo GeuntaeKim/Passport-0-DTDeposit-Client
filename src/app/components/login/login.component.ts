@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Subscription } from "rxjs";
 import { AuthService } from '../../services/auth.service';
-import { GlobalVariable } from '../../shared/global';
+import { LoadingService } from '../../services/loading.service';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -11,18 +12,26 @@ import { MatSnackBar } from '@angular/material';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public snackBar: MatSnackBar, private authService: AuthService) { }
+  loading: boolean = false;
+  loadingSubscription: Subscription;
 
   id = new FormControl('', [
-      Validators.required,
-      //Validators.pattern(GlobalVariable.EMAIL_REGEX)
+    Validators.required,
+    //Validators.pattern(GlobalVariable.EMAIL_REGEX)
   ]);
 
   password = new FormControl('', [
       Validators.required
   ]);
 
-  login() {
+  constructor(public snackBar: MatSnackBar, private authService: AuthService, private loadingService: LoadingService) { }
+
+  async login() {
+
+      this.loadingSubscription = this.loadingService.loadingStatus.subscribe((value) => {
+        this.loading = value;
+      });
+
       this.markAllAsDirty();
 
       if(!this.isValid()) {
@@ -31,14 +40,16 @@ export class LoginComponent implements OnInit {
           });
           return;
       } else {
-          if (!this.authService.login(this.id.value, this.password.value)){
+          var isLogin = await this.authService.login(this.id.value, this.password.value);
+          if (!isLogin){
             this.snackBar.open('Authentication Failed!', 'ERROR', {
               duration: 1000,
             });
             return;
           }
-
       }
+
+      this.loadingSubscription.unsubscribe();
   }
 
   markAllAsDirty() {

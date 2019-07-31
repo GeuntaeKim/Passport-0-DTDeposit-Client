@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { LoadingService } from '../../../services/loading.service';
+import { MatSnackBar } from '@angular/material';
+import { GlobalVariable } from '../../../shared/global';
+import { DepositService, Card, Deposit, Item } from '../../../services/deposit.service';
 
 @Component({
   selector: 'app-select-card',
@@ -10,30 +15,136 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class SelectCardComponent implements OnInit {
   
-  centered = false;
-  disabled = false;
-  unbounded = false;
+  /* Material Components */
+  isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
 
-  radius: number;
-  color: string;
-  
-  cardNumber = new FormControl();
-  options: string[] = ['1234567812345678', '22222222222222222', '3333333333333333'];
-  filteredOptions: Observable<string[]>;
+  /* UI Components */
+  frontImage: any;
+  rearImage: any;
 
-  constructor() { }
+  /* Data Objects */
+  isRegistered: boolean = false;
+  cardOptions: string[];
+  cardFilteredOptions: Observable<string[]>;
+  isFrontImageLoading: boolean = false;
+  isRearImageLoading: boolean = false;
+  base64data;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    public snackBar: MatSnackBar, 
+    private loadingService: LoadingService,
+    private depositService: DepositService
+  ) { }
 
   ngOnInit() {
-    console.log('select card');
-    this.filteredOptions = this.cardNumber.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
+    this.firstFormGroup = this.formBuilder.group({
+      firstCtrl: ['', Validators.required],
+      cardNumber: ['', [
+        Validators.required,
+        Validators.pattern(GlobalVariable.CARD_REGEX)
+      ]]
+    });
+    this.secondFormGroup = this.formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+
+    this.loadCardList();
+    this.getFrontImage();
+  }
+
+  async loadCardList() {
+    await this.depositService.getCardList()
+    .then(results => {
+      if (this.cardOptions == null) {
+        this.cardOptions = [];
+      }
+      results.forEach(card => {
+        this.cardOptions.push(
+          card.cardNumber.toString().substring(0, 4) + "-" +
+          card.cardNumber.toString().substring(4, 8) + "-" +
+          card.cardNumber.toString().substring(8, 12) + "-" +
+          card.cardNumber.toString().substring(12, 16)
+          );
+      });
+    })
+    .then(() => {
+      this.cardFilteredOptions = this.firstFormGroup.get('cardNumber').valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+    });
+  }
+
+  getCardNumber(): string {
+    //console.log(this.firstFormGroup);
+    //console.log(this.firstFormGroup.get('cardNumber').value)
+    return this.firstFormGroup.get('cardNumber').value;
+  }
+  
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      console.log(reader.result);
+      this.frontImage = reader.result;
+    }, false);
+
+    if (image) {
+      reader.readAsArrayBuffer(image);
+    }
+    reader.onload = function(e) {
+      console.log('onload')
+      console.log(reader.result);
+    }
+    reader.onloadend = function() {
+      console.log('onloadend')
+      console.log(reader.result);
+    }
+  }
+
+  async getFrontImage() {
+    this.isFrontImageLoading = true;
+    await this.depositService.getItem(1)
+    .then(results => {
+      console.log('from service');
+      console.log(results);
+      //this.createImageFromBlob(results);
+      this.isFrontImageLoading = false;
+    }), error => {
+      this.isFrontImageLoading = false;
+      console.log(error);
+    };
+
+  }
+
+  onClearClick(): void {
+    this.firstFormGroup.get('cardNumber').setValue('');
+    this.isRegistered = false;
+  }
+
+  onCardNumberChange(): void {
+    this.isRegistered = false;
+  }
+
+  onCardSelect(): void {
+    this.isRegistered = true;
+  }
+
+  onRegisterClick(): void {
+    this.router.navigate(['list', this.firstFormGroup.get('cardNumber').value], {relativeTo: this.route} );
+  }
+
+  onSaveClick(): void {
+
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return this.cardOptions.filter(cardOptions => cardOptions.toLowerCase().indexOf(filterValue) === 0);
   }
 
 }

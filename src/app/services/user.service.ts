@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { GlobalVariable } from '../shared/global';
 import { MatSnackBar } from '@angular/material';
@@ -18,6 +18,13 @@ export class User {
 export class UserService {
   BASE_URL = GlobalVariable.BASE_API_URL;
   FETCH_LATENCY = GlobalVariable.FETCH_LATENCY;
+  // below will be needed when cor is set in backend
+  httpOptions = {
+    headers: new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin':'*',
+    })
+  };
 
   private userListStore;
   private userListSubject: Subject<User[]> = new Subject();
@@ -31,15 +38,27 @@ export class UserService {
       this.user.subscribe();
   }
 
-  login(id: String, password: String) {
-      var authInfo;
+  async login(id: String, password: String) {
+    var authInfo;
+    var response;
+    
+    try {
+        response = await this.http.get(this.BASE_URL + '/users/' +id).toPromise();
+    } catch (error) {
+        console.log(error)
+        this.handleError("Unable to login");
+    }
 
-      authInfo = {
-          token: "AAAA",
-          name: id
-      };
-      
-      return authInfo;
+    /* TODO Actual authentication is required for now just check userid */ 
+    //if (response != null && response.status == 1){
+    if (response != null && response[0] != null){
+        authInfo = {
+            token: "AAAA",
+            name: response[0].userid
+        };
+    }
+    console.log(authInfo);
+    return authInfo;
   }
 
   private handleError(error) {

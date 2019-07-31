@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { DepositService } from 'src/app/services/deposit.service';
 
 @Component({
   selector: 'app-capture-deposit',
@@ -14,7 +15,7 @@ export class CaptureDepositComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('loaded');
+
   }
 
 }

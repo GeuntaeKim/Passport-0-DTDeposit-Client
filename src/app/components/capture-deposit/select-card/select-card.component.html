@@ -1,22 +1,93 @@
 <div class="table">
-    <div class="row">
-        <mat-card>
+    <mat-card>
+        <div class="row">
             <h3 highlight>Capture Deposit</h3>
+            <mat-divider></mat-divider>
+        </div>
+        <div class="row">
+            <mat-horizontal-stepper [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Fill the Card information</ng-template>
+                <div class="row">
+                    <mat-form-field class="input-70-width">
+                        <input type="text" placeholder="Type or choose the Card" matInput formControlName="cardNumber" (change)="onCardNumberChange()" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let cardOption of cardFilteredOptions | async" [value]="cardOption" (click)="onCardSelect()">
+                                {{cardOption}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <button mat-button *ngIf="getCardNumber()" matSuffix mat-icon-button aria-label="Clear" (click)="onClearClick();">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <button mat-button [(disabled)]="isRegistered" (click)="onRegisterClick()">Register this Card <mat-icon>add_circle</mat-icon></button>
+                </div>
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+                <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Scan Items</ng-template>
+                <mat-tab-group>
+                    <mat-tab label="Front">test1
+                        <img [src]="frontImage" *ngIf="!isImageLoading; else noFrontImageFound">
+                        <ng-template #noImageFound>test2
+                            <img src="fallbackImage.png" alt="Fallbackimage">
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Rear">
+                    </mat-tab>
+                  </mat-tab-group>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Save Deposit</ng-template>
+                You are now done.
+                <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Print Receipt</ng-template>
+                You are now done.
+                <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+                </div>
+            </mat-step>
+            </mat-horizontal-stepper>
 
-            <mat-form-field class="input-full-width">
-                <input type="text" placeholder="Card Number" aria-label="Number" matInput [formControl]="cardNumber" [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                        {{option}}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-    <!--
-            <div id="detail">
-                <view-scanned-images [inputCard]="selectedCard"></view-scanned-images>
-                <button [routerLink]="['new']" mat-fab color="primary"><matd-icon>add</matd-icon></button>
-            </div>  
-    -->
-        </mat-card>
+
+        </div>
+
+        <div class="row">
+            <div class="table">
+                <div class="row">
+
+                </div>
+                <div class="row">
+                </div>
+                <div class="row">
+                    <div id="detail">
+                        <!--<view-scanned-images [inputCard]="option"></view-scanned-images>-->
+                        
+                    </div>  
+                </div>
+                <div class="row ">
+                    
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <div class="buttons">
+        <button mat-button [routerLink]="['new']" color="primary" (click)="onSaveClick()">Save Deposit</button>
     </div>
 </div>
